@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 
 
 # 1. Corpus;
@@ -12,6 +13,11 @@ def tokenize_corpus(thisCorpus):
     tokens = [x.split() for x in thisCorpus]
 
     return tokens
+
+def get_input_layer(word_idx):
+    x = torch.zeros(vocabulary_size).float()
+    x[word_idx] = 1.0
+    return x
 
 
 # 1. Corpus;
@@ -60,4 +66,8 @@ for sentence in tokenized_corpus:
             idx_pairs.append((indices[center_word_pos], context_word_idx))
 
 idx_pairs = np.array(idx_pairs) # it will be useful to have this as numpy array
+print("idx_pair: ", idx_pairs)
+
+
+
 

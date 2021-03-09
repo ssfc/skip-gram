@@ -67,12 +67,12 @@ for sentence in tokenized_corpus:
             idx_pairs.append((indices[center_word_pos], context_word_idx))
 
 idx_pairs = np.array(idx_pairs) # it will be useful to have this as numpy array
-print("idx_pair: ", idx_pairs)
+# print("idx_pair: ", idx_pairs)
 
 embedding_dims = 5
 W1 = Variable(torch.randn(embedding_dims, vocabulary_size).float(), requires_grad=True)
 W2 = Variable(torch.randn(vocabulary_size, embedding_dims).float(), requires_grad=True)
-num_epochs = 100
+num_epochs = 200
 learning_rate = 0.001
 
 for epo in range(num_epochs):
@@ -87,7 +87,7 @@ for epo in range(num_epochs):
         log_softmax = F.log_softmax(z2, dim=0)
 
         loss = F.nll_loss(log_softmax.view(1, -1), y_true)
-        loss_val += loss.data[0]
+        loss_val += loss.item()
         loss.backward()
         W1.data -= learning_rate * W1.grad.data
         W2.data -= learning_rate * W2.grad.data

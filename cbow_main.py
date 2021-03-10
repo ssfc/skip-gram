@@ -32,7 +32,7 @@ for i in range(2, len(raw_text) - 2):
                raw_text[i + 1], raw_text[i + 2]]
     target = raw_text[i]
     data.append((context, target))
-
+print("\nData: ", data)
 
 class CBOW(torch.nn.Module):
     def __init__(self, vocab_size, embedding_dim):

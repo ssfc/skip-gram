@@ -34,6 +34,7 @@ for i in range(2, len(raw_text) - 2):
     data.append((context, target))
 print("\nData: ", data)
 
+
 class CBOW(torch.nn.Module):
     def __init__(self, vocab_size, embedding_dim):
         super(CBOW, self).__init__()

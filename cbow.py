@@ -21,6 +21,7 @@ print("raw_text: ", raw_text)
 # By deriving a set from `raw_text`, we deduplicate the array
 vocab = set(raw_text)
 vocab_size = len(vocab)
+print("vocab: ", vocab)
 
 word_to_ix = {word: ix for ix, word in enumerate(vocab)}
 ix_to_word = {ix: word for ix, word in enumerate(vocab)}

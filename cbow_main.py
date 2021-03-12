@@ -64,8 +64,7 @@ class CBOW(torch.nn.Module):
 model = CBOW(vocab_size, EMDEDDING_DIM)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("\nDevice: ", device)
-
-#model.to(device)
+model.to(device)
 #data = data.to(device)
 
 loss_function = nn.NLLLoss()

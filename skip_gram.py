@@ -1,3 +1,6 @@
+# https://towardsdatascience.com/implementing-word2vec-in-pytorch-skip-gram-model-e6bae040d2fb
+
+
 import numpy as np
 import torch
 from torch.autograd import Variable
@@ -5,13 +8,6 @@ import torch.nn.functional as F
 
 
 # 1. Corpus;
-def tokenize_corpus(this_corpus):
-    tokens = [x.split() for x in this_corpus]
-
-    return tokens
-
-
-# 2. Creating vocabulary;
 def tokenize_corpus(this_corpus):
     tokens = [x.split() for x in this_corpus]
 

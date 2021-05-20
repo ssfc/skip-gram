@@ -7,7 +7,7 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 
 
-def tokenize_corpus(this_corpus):  # split each sentence into list, made up with words; 
+def tokenize_corpus(this_corpus):  # split each sentence into list, made up with words;
     tokens = [x.split() for x in this_corpus]
 
     return tokens
@@ -33,7 +33,7 @@ corpus = [
 print("Corpus: ", corpus)
 
 # 2. Creating vocabulary;
-tokenized_corpus = tokenize_corpus(corpus)
+tokenized_corpus = tokenize_corpus(corpus)  # split each sentence into list, made up with words;
 print("Tokenized corpus: ", tokenized_corpus)
 
 vocabulary = []

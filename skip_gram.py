@@ -68,7 +68,7 @@ for sentence in tokenized_corpus:
                 idx_pairs.append((indices[center_word_pos], context_word_idx))
 
 print(idx_pairs)
-idx_pairs = np.array(idx_pairs)  # it will be useful to have this as numpy array
+idx_pairs = np.array(idx_pairs)  # convert list made up with tuples to numpy array; 
 # print("idx_pair: ", idx_pairs)
 
 embedding_dims = 5

@@ -42,13 +42,12 @@ with open("corpus.txt", "r", encoding='UTF-8') as f:
 
 sentences = []
 for line in data:
-    sentences.append(line)
+    sentences.append(line[1:])
 
 print(sentences)
 print(len(sentences))
 tokenized_sentence = tokenize_sentence(sentences)  # split each sentence into list, made up with words;
 print("Tokenized sentence: ", tokenized_sentence)
-
 
 
 print("Corpus: ", corpus)

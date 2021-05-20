@@ -95,6 +95,7 @@ for epo in range(num_epochs):
 
         W1.grad.data.zero_()
         W2.grad.data.zero_()
+
     if epo % 10 == 0:
         print(f'Loss at epo {epo}: {loss_val / len(idx_pairs)}')
 

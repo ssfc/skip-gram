@@ -52,7 +52,7 @@ print("Vocabulary: ", vocabulary)
 # 3. generate pairs center word, context word
 window_size = 2
 idx_pairs = []
-# for each sentence
+# generate idx_pairs for all sentences;
 for sentence in tokenized_corpus:
     indices = [word2idx[word] for word in sentence]  # create list;
     print(indices)  # convert word to numbers(index) representing it;

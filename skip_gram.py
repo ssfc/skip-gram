@@ -52,7 +52,7 @@ print("Vocabulary: ", vocabulary)
 # 3. generate pairs center word, context word
 window_size = 2
 idx_pairs = []
-# generate idx_pairs for all sentences;
+# generate list idx_pairs for all sentences, made up with tuples;
 for sentence in tokenized_corpus:
     indices = [word2idx[word] for word in sentence]  # create list;
     print(indices)  # convert word to numbers(index) representing it;
@@ -67,7 +67,7 @@ for sentence in tokenized_corpus:
                 context_word_idx = indices[context_word_pos]
                 idx_pairs.append((indices[center_word_pos], context_word_idx))
 
-
+print(idx_pairs)
 idx_pairs = np.array(idx_pairs)  # it will be useful to have this as numpy array
 # print("idx_pair: ", idx_pairs)
 

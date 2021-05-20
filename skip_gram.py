@@ -5,8 +5,8 @@ import torch.nn.functional as F
 
 
 # 1. Corpus;
-def tokenize_corpus(thisCorpus):
-    tokens = [x.split() for x in thisCorpus]
+def tokenize_corpus(this_corpus):
+    tokens = [x.split() for x in this_corpus]
 
     return tokens
 
@@ -46,8 +46,8 @@ for sentence in tokenized_corpus:
         if token not in vocabulary:
             vocabulary.append(token)
 
-word2idx = {w: idx for (idx, w) in enumerate(vocabulary)}
-idx2word = {idx: w for (idx, w) in enumerate(vocabulary)}
+word2idx = {w: idx for (idx, w) in enumerate(vocabulary)}  # create dictionary;
+idx2word = {idx: w for (idx, w) in enumerate(vocabulary)}  # create dictionary;
 
 vocabulary_size = len(vocabulary)
 print("Vocabulary: ", vocabulary)
@@ -57,7 +57,7 @@ window_size = 2
 idx_pairs = []
 # for each sentence
 for sentence in tokenized_corpus:
-    indices = [word2idx[word] for word in sentence]
+    indices = [word2idx[word] for word in sentence]  # create list;
     # for each word, treated as center word
     for center_word_pos in range(len(indices)):
         # for each window position

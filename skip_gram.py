@@ -3,17 +3,20 @@ import torch
 from torch.autograd import Variable
 import torch.nn.functional as F
 
+
 # 1. Corpus;
 def tokenize_corpus(thisCorpus):
     tokens = [x.split() for x in thisCorpus]
 
     return tokens
 
+
 # 2. Creating vocabulary;
-def tokenize_corpus(thisCorpus):
-    tokens = [x.split() for x in thisCorpus]
+def tokenize_corpus(this_corpus):
+    tokens = [x.split() for x in this_corpus]
 
     return tokens
+
 
 def get_input_layer(word_idx):
     x = torch.zeros(vocabulary_size).float()
@@ -66,7 +69,7 @@ for sentence in tokenized_corpus:
             context_word_idx = indices[context_word_pos]
             idx_pairs.append((indices[center_word_pos], context_word_idx))
 
-idx_pairs = np.array(idx_pairs) # it will be useful to have this as numpy array
+idx_pairs = np.array(idx_pairs)  # it will be useful to have this as numpy array
 # print("idx_pair: ", idx_pairs)
 
 embedding_dims = 5
@@ -96,7 +99,3 @@ for epo in range(num_epochs):
         W2.grad.data.zero_()
     if epo % 10 == 0:
         print(f'Loss at epo {epo}: {loss_val / len(idx_pairs)}')
-
-
-
-

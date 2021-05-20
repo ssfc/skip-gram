@@ -13,6 +13,12 @@ def tokenize_corpus(this_corpus):  # split each sentence into list, made up with
     return tokens
 
 
+def tokenize_sentence(sentences):  # split each sentence into list, made up with words;
+    tokens = [x.split("*") for x in sentences]
+
+    return tokens
+
+
 # Input layer is just the center word encoded in one-hot manner. It dimensions are [1, vocabulary_size]
 def get_input_layer(word_idx):
     x = torch.zeros(vocabulary_size).float()
@@ -40,6 +46,10 @@ for line in data:
 
 print(sentences)
 print(len(sentences))
+tokenized_sentence = tokenize_sentence(sentences)  # split each sentence into list, made up with words;
+print("Tokenized sentence: ", tokenized_sentence)
+
+
 
 print("Corpus: ", corpus)
 

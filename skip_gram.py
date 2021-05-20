@@ -7,7 +7,6 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 
 
-# 1. Corpus;
 def tokenize_corpus(this_corpus):
     tokens = [x.split() for x in this_corpus]
 
@@ -20,7 +19,7 @@ def get_input_layer(word_idx):
     return x
 
 
-# 1. Corpus;
+# 1. Corpus is a list, made up with sentence;
 corpus = [
     'he is a king',
     'she is a queen',
@@ -32,6 +31,7 @@ corpus = [
 ]
 
 print("Corpus: ", corpus)
+
 # 2. Creating vocabulary;
 tokenized_corpus = tokenize_corpus(corpus)
 print("Tokenized corpus: ", tokenized_corpus)

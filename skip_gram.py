@@ -80,11 +80,11 @@ learning_rate = 0.001
 for epo in range(num_epochs):
     loss_val = 0
     for data, target in idx_pairs:
-        x = Variable(get_input_layer(data)).float()  # x is a vector, size 15; 
+        x = Variable(get_input_layer(data)).float()  # x is a vector, size 15;
         y_true = Variable(torch.from_numpy(np.array([target])).long())
 
-        z1 = torch.matmul(W1, x)
-        z2 = torch.matmul(W2, z1)
+        z1 = torch.matmul(W1, x)  # 2-dimension times 1-dimensions, return 1 dimension;
+        z2 = torch.matmul(W2, z1)  # 2-dimension times 1-dimensions, return 1 dimension;
 
         log_softmax = F.log_softmax(z2, dim=0)
 

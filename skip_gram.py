@@ -13,6 +13,7 @@ def tokenize_corpus(this_corpus):  # split each sentence into list, made up with
     return tokens
 
 
+# Input layer is just the center word encoded in one-hot manner. It dimensions are [1, vocabulary_size]
 def get_input_layer(word_idx):
     x = torch.zeros(vocabulary_size).float()
     x[word_idx] = 1.0

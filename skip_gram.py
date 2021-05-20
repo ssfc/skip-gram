@@ -42,7 +42,7 @@ with open("corpus.txt", "r", encoding='UTF-8') as f:
 
 sentences = []
 for line in data:
-    sentences.append(line[1:])
+    sentences.append(line[1 : len(line)-2])
 
 print(sentences)
 print(len(sentences))

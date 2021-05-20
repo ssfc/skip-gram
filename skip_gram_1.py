@@ -1,6 +1,7 @@
 # Step 1: Import libraries
 
 import torch
+
 torch.manual_seed(10)
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
@@ -9,16 +10,18 @@ import numpy as np
 from sklearn import decomposition
 from pathlib import Path
 import warnings
+
 warnings.filterwarnings("ignore")
 import seaborn as sns
 from matplotlib import pyplot as plt
-plt.rcParams['figure.figsize'] = (10,8)
+
+plt.rcParams['figure.figsize'] = (10, 8)
 import nltk
 
 nltk.download('stopwords')
 nltk.download('punkt')
 
-#Import stopwords
+# Import stopwords
 from nltk.corpus import stopwords
 
 # Step 2: Consider we have a simplified corpus of words like below.
@@ -45,6 +48,7 @@ corpus = [
     'Ford from USA',
     'Ford is a car'
 ]
+
 
 # Step 3: Skip-Gram model tries to predict context given a word.
 
@@ -108,9 +112,11 @@ def prepare_set_ravel(corpus, n_gram=1):
                     result = result.append(row, ignore_index=True)
     return result
 
+
 # Step 4: A bit of preprocessing;
 
 stop_words = set(stopwords.words('english'))
+
 
 def preprocess(corpus):
     result = []
@@ -118,10 +124,9 @@ def preprocess(corpus):
         out = nltk.word_tokenize(i)
         out = [x.lower() for x in out]
         out = [x for x in out if x not in stop_words]
-        result.append(" ". join(out))
+        result.append(" ".join(out))
     return result
+
 
 corpus = preprocess(corpus)
 corpus
-
-

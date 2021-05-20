@@ -40,7 +40,7 @@ vocabulary = []
 for sentence in tokenized_corpus:
     for token in sentence:
         if token not in vocabulary:
-            vocabulary.append(token)
+            vocabulary.append(token)  # add word not in vocabulary into vocabulary;
 
 word2idx = {w: idx for (idx, w) in enumerate(vocabulary)}  # create dictionary;
 idx2word = {idx: w for (idx, w) in enumerate(vocabulary)}  # create dictionary;
@@ -54,6 +54,8 @@ idx_pairs = []
 # for each sentence
 for sentence in tokenized_corpus:
     indices = [word2idx[word] for word in sentence]  # create list;
+    print(indices)  # convert word to numbers(index) representing it; 
+
     # for each word, treated as center word
     for center_word_pos in range(len(indices)):
         # for each window position

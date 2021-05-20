@@ -31,6 +31,16 @@ corpus = [
     'paris is france capital',
 ]
 
+with open("corpus.txt", "r", encoding='UTF-8') as f:
+    data = f.readlines()
+
+sentences = []
+for line in data:
+    sentences.append(line)
+
+print(sentences)
+print(len(sentences))
+
 print("Corpus: ", corpus)
 
 # 2. Creating vocabulary;

@@ -37,6 +37,8 @@ corpus = [
     'paris is france capital',
 ]
 
+print("Corpus: ", corpus)
+
 with open("corpus.txt", "r", encoding='UTF-8') as f:
     data = f.readlines()
 
@@ -50,8 +52,6 @@ tokenized_sentence = tokenize_sentence(sentences)  # split each sentence into li
 print("Tokenized sentence: ", tokenized_sentence)
 
 
-print("Corpus: ", corpus)
-
 # 2. Creating vocabulary;
 tokenized_corpus = tokenize_corpus(corpus)  # split each sentence into list, made up with words;
 print("Tokenized corpus: ", tokenized_corpus)
@@ -61,6 +61,9 @@ for sentence in tokenized_corpus:
     for token in sentence:
         if token not in vocabulary:
             vocabulary.append(token)  # add word not in vocabulary into vocabulary;
+
+vocabulary_size = len(vocabulary)
+print("Vocabulary: ", vocabulary)
 
 words = []
 for sentence in tokenized_sentence:
@@ -79,8 +82,6 @@ idx_to_word = {idx: w for (idx, w) in enumerate(words)}  # create dictionary;
 print("word to index: ", word_to_idx)
 print("index to word", idx_to_word)
 
-vocabulary_size = len(vocabulary)
-print("Vocabulary: ", vocabulary)
 
 # 3. generate pairs center word, context word
 window_size = 2

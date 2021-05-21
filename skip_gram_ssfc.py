@@ -70,8 +70,11 @@ for sentence in tokenized_sentence:
     for token in sentence:
         if token not in words:
             words.append(token)  # add word not in vocabulary into vocabulary;
+
+word_size = len(words)
 print("Words: ", words)
-print("Size of words: ", len(words))
+print("Size of words: ", word_size)
+
 
 word2idx = {w: idx for (idx, w) in enumerate(vocabulary)}  # create dictionary;
 idx2word = {idx: w for (idx, w) in enumerate(vocabulary)}  # create dictionary;
@@ -101,9 +104,29 @@ for sentence in tokenized_corpus:
                 context_word_idx = indices[context_word_pos]
                 idx_pairs.append((indices[center_word_pos], context_word_idx))
 
-print(idx_pairs)
+print("idx_pairs: ", idx_pairs)
 idx_pairs = np.array(idx_pairs)  # convert list made up with tuples to numpy array;
 # print("idx_pair: ", idx_pairs)
+
+word_pairs = []
+# generate list idx_pairs for all sentences, made up with tuples;
+for sentence in tokenized_sentence:
+    indices = [word_to_idx[word] for word in sentence]  # create list;
+    print(indices)  # convert word to numbers(index) representing it;
+
+    # for each word, treated as center word
+    for center_word_pos in range(len(indices)):
+        # for each window position
+        for w in range(-window_size, window_size + 1):
+            context_word_pos = center_word_pos + w
+            # make sure not jump out sentence
+            if (context_word_pos >= 0) and (context_word_pos < len(indices)) and (center_word_pos != context_word_pos):
+                context_word_idx = indices[context_word_pos]
+                word_pairs.append((indices[center_word_pos], context_word_idx))
+
+print(word_pairs)
+word_pairs = np.array(word_pairs)  # convert list made up with tuples to numpy array;
+
 
 embedding_dims = 5
 W1 = Variable(torch.randn(embedding_dims, vocabulary_size).float(), requires_grad=True)

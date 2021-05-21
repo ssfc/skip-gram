@@ -40,16 +40,6 @@ corpus = [
 with open("corpus.txt", "r", encoding='UTF-8') as f:
     data = f.readlines()
 
-sentences = []
-for line in data:
-    sentences.append(line[1 : len(line)-2])
-
-print("Sentences: ", sentences)
-print("Size of sentences: ", len(sentences))
-tokenized_sentence = tokenize_sentence(sentences)  # split each sentence into list, made up with words;
-print("Tokenized sentence: ", tokenized_sentence)
-
-
 print("Corpus: ", corpus)
 
 # 2. Creating vocabulary;
@@ -62,19 +52,10 @@ for sentence in tokenized_corpus:
         if token not in vocabulary:
             vocabulary.append(token)  # add word not in vocabulary into vocabulary;
 
-words = []
-for sentence in tokenized_sentence:
-    for token in sentence:
-        if token not in words:
-            words.append(token)  # add word not in vocabulary into vocabulary;
-print("Words: ", words)
-print("Size of words: ", len(words))
 
 word2idx = {w: idx for (idx, w) in enumerate(vocabulary)}  # create dictionary;
 idx2word = {idx: w for (idx, w) in enumerate(vocabulary)}  # create dictionary;
 
-wordToidx = {w: idx for (idx, w) in enumerate(words)}  # create dictionary;
-idxToword = {idx: w for (idx, w) in enumerate(words)}  # create dictionary;
 
 vocabulary_size = len(vocabulary)
 print("Vocabulary: ", vocabulary)

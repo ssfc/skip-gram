@@ -37,9 +37,6 @@ corpus = [
     'paris is france capital',
 ]
 
-with open("corpus.txt", "r", encoding='UTF-8') as f:
-    data = f.readlines()
-
 print("Corpus: ", corpus)
 
 # 2. Creating vocabulary;

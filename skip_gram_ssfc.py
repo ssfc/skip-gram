@@ -73,8 +73,11 @@ print("Size of words: ", len(words))
 word2idx = {w: idx for (idx, w) in enumerate(vocabulary)}  # create dictionary;
 idx2word = {idx: w for (idx, w) in enumerate(vocabulary)}  # create dictionary;
 
-wordToidx = {w: idx for (idx, w) in enumerate(words)}  # create dictionary;
-idxToword = {idx: w for (idx, w) in enumerate(words)}  # create dictionary;
+word_to_idx = {w: idx for (idx, w) in enumerate(words)}  # create dictionary;
+idx_to_word = {idx: w for (idx, w) in enumerate(words)}  # create dictionary;
+
+print("word to index: ", word_to_idx)
+print("index to word", idx_to_word)
 
 vocabulary_size = len(vocabulary)
 print("Vocabulary: ", vocabulary)

@@ -60,7 +60,7 @@ print("index to word", idx_to_word)
 
 # 3. generate pairs center word, context word
 window_size = 2
-word_pairs = []
+idx_pairs = []
 # generate list idx_pairs for all sentences, made up with tuples;
 for sentence in tokenized_sentence:
     indices = [word_to_idx[word] for word in sentence]  # create list;
@@ -74,10 +74,10 @@ for sentence in tokenized_sentence:
             # make sure not jump out sentence
             if (context_word_pos >= 0) and (context_word_pos < len(indices)) and (center_word_pos != context_word_pos):
                 context_word_idx = indices[context_word_pos]
-                word_pairs.append((indices[center_word_pos], context_word_idx))
+                idx_pairs.append((indices[center_word_pos], context_word_idx))
 
-print(word_pairs)
-word_pairs = np.array(word_pairs)  # convert list made up with tuples to numpy array;
+print(idx_pairs)
+idx_pairs = np.array(idx_pairs)  # convert list made up with tuples to numpy array;
 
 
 embedding_dims = 5
@@ -88,7 +88,7 @@ learning_rate = 0.001
 
 for epo in range(num_epochs):
     loss_val = 0
-    for data, target in word_pairs:
+    for data, target in idx_pairs:
         x = Variable(get_input_layer(data, word_size)).float()  # x is a vector, size 15;
         y_true = Variable(torch.from_numpy(np.array([target])).long())
 
@@ -107,4 +107,5 @@ for epo in range(num_epochs):
         W2.grad.data.zero_()
 
     if epo % 10 == 0:
-        print(f'Loss at epo {epo}: {loss_val / len(word_pairs)}')
+        print(f'Loss at epo {epo}: {loss_val / len(idx_pairs)}')
+

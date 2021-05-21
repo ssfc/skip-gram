@@ -20,8 +20,8 @@ def tokenize_sentence(sentences):  # split each sentence into list, made up with
 
 
 # Input layer is just the center word encoded in one-hot manner. It dimensions are [1, vocabulary_size]
-def get_input_layer(word_idx):
-    x = torch.zeros(vocabulary_size).float()
+def get_input_layer(word_idx, vocabularySize):
+    x = torch.zeros(vocabularySize).float()
     x[word_idx] = 1.0
     return x
 
@@ -91,7 +91,7 @@ learning_rate = 0.001
 for epo in range(num_epochs):
     loss_val = 0
     for data, target in idx_pairs:
-        x = Variable(get_input_layer(data)).float()  # x is a vector, size 15;
+        x = Variable(get_input_layer(data, vocabulary_size)).float()  # x is a vector, size 15;
         y_true = Variable(torch.from_numpy(np.array([target])).long())
 
         z1 = torch.matmul(W1, x)  # 2-dimension times 1-dimensions, return 1 dimension;

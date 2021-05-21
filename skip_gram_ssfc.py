@@ -88,8 +88,8 @@ learning_rate = 0.001
 
 for epo in range(num_epochs):
     loss_val = 0
-    for data, target in idx_pairs:
-        x = Variable(get_input_layer(data, word_size)).float()  # x is a vector, size 15;
+    for center_word, target in idx_pairs:
+        x = Variable(get_input_layer(center_word, word_size)).float()  # x is a vector, size 15;
         y_true = Variable(torch.from_numpy(np.array([target])).long())
 
         z1 = torch.matmul(W1, x)  # 2-dimension times 1-dimensions, return 1 dimension;

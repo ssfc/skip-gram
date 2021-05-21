@@ -41,18 +41,18 @@ print("Tokenized sentence: ", tokenized_sentence)
 
 
 # 2. Creating vocabulary;
-words = []
+vocabulary = []
 for sentence in tokenized_sentence:
     for token in sentence:
-        if token not in words:
-            words.append(token)  # add word not in vocabulary into vocabulary;
+        if token not in vocabulary:
+            vocabulary.append(token)  # add word not in vocabulary into vocabulary;
 
-word_size = len(words)
-print("Words: ", words)
-print("Size of words: ", word_size)
+word_size = len(vocabulary)
+print("Vocabulary: ", vocabulary)
+print("Size of vocabulary: ", word_size)
 
-word_to_idx = {w: idx for (idx, w) in enumerate(words)}  # create dictionary;
-idx_to_word = {idx: w for (idx, w) in enumerate(words)}  # create dictionary;
+word_to_idx = {w: idx for (idx, w) in enumerate(vocabulary)}  # create dictionary;
+idx_to_word = {idx: w for (idx, w) in enumerate(vocabulary)}  # create dictionary;
 
 print("word to index: ", word_to_idx)
 print("index to word", idx_to_word)
@@ -83,7 +83,7 @@ idx_pairs = np.array(idx_pairs)  # convert list made up with tuples to numpy arr
 embedding_dims = 5
 W1 = Variable(torch.randn(embedding_dims, word_size).float(), requires_grad=True)
 W2 = Variable(torch.randn(word_size, embedding_dims).float(), requires_grad=True)
-num_epochs = 200
+num_epochs = 201
 learning_rate = 0.001
 
 for epo in range(num_epochs):

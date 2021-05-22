@@ -52,10 +52,10 @@ print("Vocabulary: ", vocabulary)
 print("Size of vocabulary: ", word_size)
 
 word2idx = {w: idx for (idx, w) in enumerate(vocabulary)}  # create dictionary;
-idx_to_word = {idx: w for (idx, w) in enumerate(vocabulary)}  # create dictionary;
+idx2word = {idx: w for (idx, w) in enumerate(vocabulary)}  # create dictionary;
 
 print("word to index: ", word2idx)
-print("index to word", idx_to_word)
+print("index to word", idx2word)
 
 
 # 3. generate pairs center word, context word

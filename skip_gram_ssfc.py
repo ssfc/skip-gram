@@ -51,10 +51,10 @@ word_size = len(vocabulary)
 print("Vocabulary: ", vocabulary)
 print("Size of vocabulary: ", word_size)
 
-word_to_idx = {w: idx for (idx, w) in enumerate(vocabulary)}  # create dictionary;
+word2idx = {w: idx for (idx, w) in enumerate(vocabulary)}  # create dictionary;
 idx_to_word = {idx: w for (idx, w) in enumerate(vocabulary)}  # create dictionary;
 
-print("word to index: ", word_to_idx)
+print("word to index: ", word2idx)
 print("index to word", idx_to_word)
 
 
@@ -63,7 +63,7 @@ window_size = 2
 idx_pairs = []
 # generate list idx_pairs for all sentences, made up with tuples;
 for sentence in tokenized_sentence:
-    indices = [word_to_idx[word] for word in sentence]  # create list;
+    indices = [word2idx[word] for word in sentence]  # create list;
     print(indices)  # convert word to numbers(index) representing it;
 
     # for each word, treated as center word

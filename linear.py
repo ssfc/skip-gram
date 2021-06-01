@@ -16,18 +16,18 @@ be called just like a function.Normally the forward() will be called
 
 
 class LinearModel(torch.nn.Module):
-    def __init__(self, first):
+    def __init__(self, first, second):
         super(LinearModel, self).__init__()
         # (1,1)是指输入x和输出y的特征维度，这里数据集中的x和y的特征都是1维的
         # 该线性层需要学习的参数是w和b  获取w/b的方式分别是~linear.weight/linear.bias
-        self.linear = torch.nn.Linear(first, 1)
+        self.linear = torch.nn.Linear(first, second)
 
     def forward(self, x):
         y_pred = self.linear(x)
         return y_pred
 
 
-model = LinearModel(1)
+model = LinearModel(1, 1)
 
 # construct loss and optimizer
 # criterion = torch.nn.MSELoss(size_average = False)

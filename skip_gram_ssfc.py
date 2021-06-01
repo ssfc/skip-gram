@@ -7,11 +7,13 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 
 
+# ----------------------------------- Part 2, Design model using Class ----------------------------------------------
 class Model(torch.nn.Module):
     def __init__(self, W1, W2):
         super(Model, self).__init__()
-#        self.layer1 = torch.matmul(W1, x)
-#        self.layer2 = torch.matmul(W2, z1)
+
+    #        self.layer1 = torch.matmul(W1, x)
+    #        self.layer2 = torch.matmul(W2, z1)
 
     def forward(self, x):
         z1 = torch.matmul(W1, x)  # 2-dimension times 1-dimensions, return 1 dimension;

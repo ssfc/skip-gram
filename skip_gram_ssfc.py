@@ -10,12 +10,12 @@ import torch.nn.functional as F
 class Model(torch.nn.Module):
     def __init__(self, W1, W2):
         super(Model, self).__init__()
-        self.layer1 = torch.matmul(W1, x)
-        self.layer2 = torch.matmul(W2, z1)
+#        self.layer1 = torch.matmul(W1, x)
+#        self.layer2 = torch.matmul(W2, z1)
 
     def forward(self, x):
-        z1 = self.layer1(W1, x)  # 2-dimension times 1-dimensions, return 1 dimension;
-        z2 = self.layer2(W2, z1)  # 2-dimension times 1-dimensions, return 1 dimension;
+        z1 = torch.matmul(W1, x)  # 2-dimension times 1-dimensions, return 1 dimension;
+        z2 = torch.matmul(W2, z1)  # 2-dimension times 1-dimensions, return 1 dimension;
         return z2
 
 
@@ -96,14 +96,15 @@ W2 = Variable(torch.randn(word_size, embedding_dims).float(), requires_grad=True
 num_epochs = 201
 learning_rate = 0.001
 
+model = Model(W1, W2)
+
 for epo in range(num_epochs):
     loss_val = 0
     for center_word, context_word in idx_pairs:
         x = Variable(get_input_layer(center_word, word_size)).float()  # x is a vector, size 15;
         y_true = Variable(torch.from_numpy(np.array([context_word])).long())
 
-        z1 = torch.matmul(W1, x)  # 2-dimension times 1-dimensions, return 1 dimension;
-        z2 = torch.matmul(W2, z1)  # 2-dimension times 1-dimensions, return 1 dimension;
+        z2 = model(x)
 
         log_softmax = F.log_softmax(z2, dim=0)
 

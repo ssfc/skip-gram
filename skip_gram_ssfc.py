@@ -7,6 +7,17 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 
 
+class Model(torch.nn.Module):
+    def __init__(self):
+        super(Model, self).__init__()
+
+    def forward(self, x):
+        z1 = torch.matmul(W1, x)  # 2-dimension times 1-dimensions, return 1 dimension;
+        z2 = torch.matmul(W2, z1)  # 2-dimension times 1-dimensions, return 1 dimension;
+        return z2
+
+
+
 def tokenize_corpus(this_corpus):  # split each sentence into list, made up with words;
     tokens = [x.split() for x in this_corpus]
 

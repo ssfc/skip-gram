@@ -8,14 +8,15 @@ import torch.nn.functional as F
 
 
 class Model(torch.nn.Module):
-    def __init__(self):
+    def __init__(self, W1, W2):
         super(Model, self).__init__()
+        self.layer1 = torch.matmul(W1, x)
+        self.layer2 = torch.matmul(W2, z1)
 
     def forward(self, x):
-        z1 = torch.matmul(W1, x)  # 2-dimension times 1-dimensions, return 1 dimension;
-        z2 = torch.matmul(W2, z1)  # 2-dimension times 1-dimensions, return 1 dimension;
+        z1 = self.layer1(W1, x)  # 2-dimension times 1-dimensions, return 1 dimension;
+        z2 = self.layer2(W2, z1)  # 2-dimension times 1-dimensions, return 1 dimension;
         return z2
-
 
 
 def tokenize_corpus(this_corpus):  # split each sentence into list, made up with words;

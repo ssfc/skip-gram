@@ -26,19 +26,19 @@ def get_input_layer(word_idx, vocabulary_size):
     return x
 
 
+# ----------------------------------- Part 1, Prepare dataset ----------------------------------------------
 # 1. Corpus is a list, made up with sentence;
 with open("corpus.txt", "r", encoding='UTF-8') as f:
     data = f.readlines()
 
 sentences = []
 for line in data:
-    sentences.append(line[1 : len(line)-2])
+    sentences.append(line[1: len(line) - 2])
 
 print("Sentences: ", sentences)
 print("Size of sentences: ", len(sentences))
 tokenized_sentence = tokenize_sentence(sentences)  # split each sentence into list, made up with words;
 print("Tokenized sentence: ", tokenized_sentence)
-
 
 # 2. Creating vocabulary;
 vocabulary = []
@@ -56,7 +56,6 @@ idx2word = {idx: w for (idx, w) in enumerate(vocabulary)}  # create dictionary;
 
 print("word to index: ", word2idx)
 print("index to word", idx2word)
-
 
 # 3. generate pairs center word, context word
 window_size = 2
@@ -78,7 +77,6 @@ for sentence in tokenized_sentence:
 
 print(idx_pairs)
 idx_pairs = np.array(idx_pairs)  # convert list made up with tuples to numpy array;
-
 
 embedding_dims = 5
 W1 = Variable(torch.randn(embedding_dims, word_size).float(), requires_grad=True)
@@ -108,4 +106,3 @@ for epo in range(num_epochs):
 
     if epo % 10 == 0:
         print(f'Loss at epo {epo}: {loss_val / len(idx_pairs)}')
-

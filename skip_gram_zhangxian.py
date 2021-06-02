@@ -24,10 +24,8 @@ FREQ = 5  # 词汇出现频数的阈值
 DELETE_WORDS = False  # 是否删除部分高频词
 VOCABULARY_SIZE = 50000
 
-url = 'http://mattmahoney.net/dc/'
 
-
-def maybe_download(file_name, expected_bytes):
+def maybe_download(file_name, expected_bytes, url):
     if not os.path.exists(file_name):
         file_name, _ = urllib.request.urlretrieve(url + file_name, file_name)
     stat_info = os.stat(file_name)
@@ -49,7 +47,7 @@ def read_data(file_name):
     return result
 
 
-filename = maybe_download('text8.zip', 31344016)
+filename = maybe_download('text8.zip', 31344016, 'http://mattmahoney.net/dc/')
 words = read_data(filename)
 print('Data size', len(words))
 

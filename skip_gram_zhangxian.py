@@ -50,6 +50,7 @@ def read_data(file_name):
 filename = maybe_download('text8.zip', 31344016, 'http://mattmahoney.net/dc/')
 words = read_data(filename)
 print('Data size', len(words))
+# print(words)
 
 # 取出频数前 50000 的单词
 

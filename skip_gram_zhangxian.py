@@ -30,11 +30,11 @@ url = 'http://mattmahoney.net/dc/'
 def maybe_download(file_name, expected_bytes):
     if not os.path.exists(file_name):
         file_name, _ = urllib.request.urlretrieve(url + file_name, file_name)
-    statinfo = os.stat(file_name)
-    if statinfo.st_size == expected_bytes:
+    stat_info = os.stat(file_name)
+    if stat_info.st_size == expected_bytes:
         print('Found and verified', file_name)
     else:
-        print(statinfo.st_size)
+        print(stat_info.st_size)
         raise Exception('Failed to verify ' + file_name + '. Can you get to it with a browser?')
     return file_name
 

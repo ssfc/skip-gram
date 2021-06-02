@@ -92,19 +92,33 @@ for sentence in tokenized_sentence:
 print(idx_pairs)
 idx_pairs = np.array(idx_pairs)  # convert list made up with tuples to numpy array;
 
+device = torch.device("cuda:0")
+
 embedding_dims = 5
 W1 = Variable(torch.randn(embedding_dims, word_size).float(), requires_grad=True)
+W1.to(device)
 W2 = Variable(torch.randn(word_size, embedding_dims).float(), requires_grad=True)
+W2.to(device)
+
 num_epochs = 201
 learning_rate = 0.001
 
 model = Model(W1, W2)
+if torch.cuda.is_available():
+    print("Use GPU")
+    model.cuda()
+model.to(device)
 
 for epo in range(num_epochs):
     loss_val = 0
     for center_word, context_word in idx_pairs:
         x = Variable(get_input_layer(center_word, word_size)).float()  # x is a vector, size 15;
         y_true = Variable(torch.from_numpy(np.array([context_word])).long())
+
+        device = torch.device("cuda:0")
+        x = x.to(device)
+        y_true = y_true.to(device)
+
 
         z2 = model(x)
 

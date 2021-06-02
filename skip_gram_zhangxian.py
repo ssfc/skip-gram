@@ -16,7 +16,7 @@ import torch.utils.data as tud
 # 参数设置
 EMBEDDING_DIM = 128  # 词向量维度
 PRINT_EVERY = 100  # 可视化频率
-EPOCHES = 1000  # 训练的轮数
+EPOCHS = 1000  # 训练的轮数
 BATCH_SIZE = 50  # 每一批训练数据大小
 N_SAMPLES = 3  # 负样本大小
 WINDOW_SIZE = 5  # 周边词窗口大小
@@ -187,7 +187,7 @@ model.to(device)
 # 定义优化器
 optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 
-for epoch in range(EPOCHES):
+for epoch in range(EPOCHS):
     for i, (input_labels, pos_labels, neg_labels) in enumerate(dataloader):
 
         device = torch.device("cuda:0")

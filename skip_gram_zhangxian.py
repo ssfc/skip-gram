@@ -39,9 +39,6 @@ def maybe_download(file_name, expected_bytes):
     return file_name
 
 
-filename = maybe_download('text8.zip', 31344016)
-
-
 def read_data(file_name):
     with zipfile.ZipFile(file_name) as f:
         # 读取出来的每个单词是 bytes
@@ -52,6 +49,7 @@ def read_data(file_name):
     return data
 
 
+filename = maybe_download('text8.zip', 31344016)
 words = read_data(filename)
 print('Data size', len(words))
 

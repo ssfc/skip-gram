@@ -17,7 +17,7 @@ import torch.utils.data as tud
 EMBEDDING_DIM = 128  # 词向量维度
 PRINT_EVERY = 100  # 可视化频率
 EPOCHES = 1000  # 训练的轮数
-BATCH_SIZE = 5  # 每一批训练数据大小
+BATCH_SIZE = 50  # 每一批训练数据大小
 N_SAMPLES = 3  # 负样本大小
 WINDOW_SIZE = 5  # 周边词窗口大小
 FREQ = 5  # 词汇出现频数的阈值
@@ -196,7 +196,7 @@ for epoch in range(EPOCHES):
         optimizer.step()
 
         if i % 100 == 0:
-            print("epoch", epoch, "loss", loss.item())
+            print("epoch", epoch, "i", i, "loss", loss.item())
 
     embedding_weights = model.input_embeddings()
     np.save("embedding-{}".format(EMBEDDING_DIM), embedding_weights)

@@ -24,58 +24,63 @@ FREQ = 5  # 词汇出现频数的阈值
 DELETE_WORDS = False  # 是否删除部分高频词
 VOCABULARY_SIZE = 50000
 
-url='http://mattmahoney.net/dc/'
+url = 'http://mattmahoney.net/dc/'
+
+
 def maybe_download(filename, expected_bytes):
     if not os.path.exists(filename):
-        filename, _ = urllib.request.urlretrieve(url+filename, filename)
+        filename, _ = urllib.request.urlretrieve(url + filename, filename)
     statinfo = os.stat(filename)
     if statinfo.st_size == expected_bytes:
         print('Found and verified', filename)
     else:
         print(statinfo.st_size)
-        raise  Exception('Failed to verify '+filename+'. Can you get to it with a browser?')
+        raise Exception('Failed to verify ' + filename + '. Can you get to it with a browser?')
     return filename
 
-filename=maybe_download('text8.zip', 31344016)
+
+filename = maybe_download('text8.zip', 31344016)
+
 
 def read_data(filename):
     with zipfile.ZipFile(filename) as f:
         # 读取出来的每个单词是 bytes
-        data=f.read(f.namelist()[0]).split()
+        data = f.read(f.namelist()[0]).split()
         # 把 bytes 转换为 str
-        #data= [str(x, encoding = "utf8") for x in data]
-        data = list(map(lambda x: str(x, encoding = "utf8"), data))
+        # data= [str(x, encoding = "utf8") for x in data]
+        data = list(map(lambda x: str(x, encoding="utf8"), data))
     return data
 
-words=read_data(filename)
+
+words = read_data(filename)
 print('Data size', len(words))
 
 # 取出频数前 50000 的单词
 
-counts_dict = dict((collections.Counter(words).most_common(VOCABULARY_SIZE-1)))
+counts_dict = dict((collections.Counter(words).most_common(VOCABULARY_SIZE - 1)))
 # 去掉频数小于 FREQ 的单词
 # trimmed_words = [word for word in words if counts_dict[word] > FREQ]
 
 # 计算 UNK 的频数 = 单词总数 - 前 50000 个单词的频数之和
-counts_dict['UNK']=len(words)-np.sum(list(counts_dict.values()))
+counts_dict['UNK'] = len(words) - np.sum(list(counts_dict.values()))
 
-#建立词和索引的对应
+# 建立词和索引的对应
 idx_to_word = []
 for word in counts_dict.keys():
     idx_to_word.append(word)
-word_to_idx = {word:i for i,word in enumerate(idx_to_word)}
+word_to_idx = {word: i for i, word in enumerate(idx_to_word)}
 
-#建立词和索引的对应
+# 建立词和索引的对应
 # idx_to_word = [word for word in counts_dict.keys()]
 # word_to_idx = {word:i for i,word in enumerate(idx_to_word)}
 
 # 把单词列表转换为编号的列表
-data=list()
+data = list()
 for word in words:
     if word in word_to_idx:
         index = word_to_idx[word]
     else:
-        index=word_to_idx['UNK']
+        index = word_to_idx['UNK']
     data.append(index)
 
 # 把单词列表转换为编号的列表
@@ -83,19 +88,19 @@ for word in words:
 
 # 计算单词频次
 total_count = len(data)
-word_freqs = {w: c/total_count for w, c in counts_dict.items()}
+word_freqs = {w: c / total_count for w, c in counts_dict.items()}
 # 以一定概率去除出现频次高的词汇
 if DELETE_WORDS:
     t = 1e-5
-    prob_drop = {w: 1-np.sqrt(t/word_freqs[w]) for w in data}
-    data = [w for w in data if random.random()<(1-prob_drop[w])]
+    prob_drop = {w: 1 - np.sqrt(t / word_freqs[w]) for w in data}
+    data = [w for w in data if random.random() < (1 - prob_drop[w])]
 else:
     data = data
 
-#计算词频,按照原论文转换为3/4次方
-word_counts = np.array([count for count in counts_dict.values()],dtype=np.float32)
-word_freqs = word_counts/np.sum(word_counts)
-word_freqs = word_freqs ** (3./4.)
+# 计算词频,按照原论文转换为3/4次方
+word_counts = np.array([count for count in counts_dict.values()], dtype=np.float32)
+word_freqs = word_counts / np.sum(word_counts)
+word_freqs = word_freqs ** (3. / 4.)
 word_freqs = word_freqs / np.sum(word_freqs)
 
 
@@ -155,7 +160,8 @@ class EmbeddingModel(nn.Module):
         input_embedding = input_embedding.unsqueeze(2)  # [batch_size, embed_size, 1],新增一个维度用于向量乘法
         # input_embedding = input_embedding.view(BATCH_SIZE, EMBEDDING_DIM, 1)
         pos_dot = torch.bmm(pos_embedding, input_embedding).squeeze(2)  # [batch_size, windows_size * 2] 只保留前两维
-        neg_dot = torch.bmm(neg_embedding.neg(), input_embedding).squeeze(2)  # [batch_size, windows_size * 2 * K] 只保留前两维
+        neg_dot = torch.bmm(neg_embedding.neg(), input_embedding).squeeze(
+            2)  # [batch_size, windows_size * 2 * K] 只保留前两维
 
         log_pos = F.logsigmoid(pos_dot).sum(1)  # 按照公式计算
         log_neg = F.logsigmoid(neg_dot).sum(1)
@@ -195,12 +201,9 @@ for epoch in range(EPOCHES):
         loss.backward()
         optimizer.step()
 
-        if i % 100 == 0:
+        if i % 200 == 0:
             print("epoch", epoch, "i", i, "loss", loss.item())
 
     embedding_weights = model.input_embeddings()
     np.save("embedding-{}".format(EMBEDDING_DIM), embedding_weights)
     torch.save(model.state_dict(), "embedding-{}.th".format(EMBEDDING_DIM))
-
-
-

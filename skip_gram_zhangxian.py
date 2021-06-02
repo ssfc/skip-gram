@@ -42,11 +42,11 @@ def maybe_download(file_name, expected_bytes):
 def read_data(file_name):
     with zipfile.ZipFile(file_name) as f:
         # 读取出来的每个单词是 bytes
-        data = f.read(f.namelist()[0]).split()
+        word_data = f.read(f.namelist()[0]).split()
         # 把 bytes 转换为 str
         # data= [str(x, encoding = "utf8") for x in data]
-        data = list(map(lambda x: str(x, encoding="utf8"), data))
-    return data
+        result = list(map(lambda x: str(x, encoding="utf8"), word_data))
+    return result
 
 
 filename = maybe_download('text8.zip', 31344016)

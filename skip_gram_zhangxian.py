@@ -42,8 +42,8 @@ def maybe_download(file_name, expected_bytes):
 filename = maybe_download('text8.zip', 31344016)
 
 
-def read_data(filename):
-    with zipfile.ZipFile(filename) as f:
+def read_data(file_name):
+    with zipfile.ZipFile(file_name) as f:
         # 读取出来的每个单词是 bytes
         data = f.read(f.namelist()[0]).split()
         # 把 bytes 转换为 str

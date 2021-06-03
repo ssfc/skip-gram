@@ -82,7 +82,6 @@ for word in words:
         index = word_to_idx['UNK']
     data.append(index)
 
-
 # 把单词列表转换为编号的列表
 # data = [word_to_idx.get(word,word_to_idx["UNK"]) for word in words]
 
@@ -105,6 +104,8 @@ word_freqs = word_counts / np.sum(word_counts)
 word_freqs = word_freqs ** (3. / 4.)
 word_freqs = word_freqs / np.sum(word_freqs)
 
+
+# print(word_freqs)
 
 # DataLoader自动帮忙生成batch
 class WordEmbeddingDataset(tud.Dataset):

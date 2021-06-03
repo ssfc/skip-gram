@@ -50,11 +50,13 @@ def read_data(file_name):
 filename = maybe_download('text8.zip', 31344016, 'http://mattmahoney.net/dc/')
 words = read_data(filename)
 print('Data size', len(words))
-# print(words)
+# print(words)  # it is a list containing all words in sequence;
 
 # 取出频数前 50000 的单词
 
 counts_dict = dict((collections.Counter(words).most_common(VOCABULARY_SIZE - 1)))
+# print(counts_dict)  # get frequency of each word;
+
 # 去掉频数小于 FREQ 的单词
 # trimmed_words = [word for word in words if counts_dict[word] > FREQ]
 
@@ -71,7 +73,7 @@ word_to_idx = {word: i for i, word in enumerate(idx_to_word)}
 # idx_to_word = [word for word in counts_dict.keys()]
 # word_to_idx = {word:i for i,word in enumerate(idx_to_word)}
 
-# 把单词列表转换为编号的列表
+# 把单词列表words转换为编号的列表
 data = list()
 for word in words:
     if word in word_to_idx:
@@ -79,6 +81,7 @@ for word in words:
     else:
         index = word_to_idx['UNK']
     data.append(index)
+
 
 # 把单词列表转换为编号的列表
 # data = [word_to_idx.get(word,word_to_idx["UNK"]) for word in words]

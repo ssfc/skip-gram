@@ -1,6 +1,3 @@
-
-
-
 import numpy as np
 import torch
 from torch import nn, optim
@@ -8,11 +5,11 @@ import random
 from collections import Counter
 import matplotlib.pyplot as plt
 
-#训练数据
+# 训练数据
 text = "I like dog i like cat i like animal dog cat animal apple cat dog like dog fish milk like dog \
 cat eyes like i like apple apple i hate apple i movie book music like cat dog hate cat dog like"
 
-#参数设置
+# 参数设置
 EMBEDDING_DIM = 2  # 词向量维度
 PRINT_EVERY = 1000  # 可视化频率
 EPOCHS = 1000  # 训练的轮数
@@ -22,6 +19,7 @@ WINDOW_SIZE = 5  # 周边词窗口大小
 FREQ = 0  # 词汇出现频率
 DELETE_WORDS = False  # 是否删除部分高频词
 
+
 # 文本预处理
 def preprocess(text, FREQ):
     text = text.lower()
@@ -30,6 +28,8 @@ def preprocess(text, FREQ):
     word_counts = Counter(words)
     trimmed_words = [word for word in words if word_counts[word] > FREQ]
     return trimmed_words
+
+
 words = preprocess(text, FREQ)
 
 # 构建词典
@@ -43,17 +43,17 @@ int_words = [vocab2int[w] for w in words]
 # 计算单词频次
 int_word_counts = Counter(int_words)
 total_count = len(int_words)
-word_freqs = {w: c/total_count for w, c in int_word_counts.items()}
+word_freqs = {w: c / total_count for w, c in int_word_counts.items()}
 
 # 去除出现频次高的词汇
 if DELETE_WORDS:
     t = 1e-5
-    prob_drop = {w: 1-np.sqrt(t/word_freqs[w]) for w in int_word_counts}
-    train_words = [w for w in int_words if random.random()<(1-prob_drop[w])]
+    prob_drop = {w: 1 - np.sqrt(t / word_freqs[w]) for w in int_word_counts}
+    train_words = [w for w in int_words if random.random() < (1 - prob_drop[w])]
 else:
     train_words = int_words
 
-#单词分布
+# 单词分布
 word_freqs = np.array(list(word_freqs.values()))
 unigram_dist = word_freqs / word_freqs.sum()
 noise_dist = torch.from_numpy(unigram_dist ** (0.75) / np.sum(unigram_dist ** (0.75)))
@@ -61,26 +61,26 @@ noise_dist = torch.from_numpy(unigram_dist ** (0.75) / np.sum(unigram_dist ** (0
 
 # 获取目标词汇
 def get_target(words, idx, WINDOW_SIZE):
-  target_window = np.random.randint(1, WINDOW_SIZE+1)
-  start_point = idx-target_window if (idx-target_window)>0 else 0
-  end_point = idx+target_window
-  targets = set(words[start_point:idx]+words[idx+1:end_point+1])
-  return list(targets)
+    target_window = np.random.randint(1, WINDOW_SIZE + 1)
+    start_point = idx - target_window if (idx - target_window) > 0 else 0
+    end_point = idx + target_window
+    targets = set(words[start_point:idx] + words[idx + 1:end_point + 1])
+    return list(targets)
 
 
 # 批次化数据
 def get_batch(words, BATCH_SIZE, WINDOW_SIZE):
-  n_batches = len(words)//BATCH_SIZE
-  words = words[:n_batches*BATCH_SIZE]
-  for idx in range(0, len(words), BATCH_SIZE):
-    batch_x, batch_y = [],[]
-    batch = words[idx:idx+BATCH_SIZE]
-    for i in range(len(batch)):
-      x = batch[i]
-      y = get_target(batch, i, WINDOW_SIZE)
-      batch_x.extend([x]*len(y))
-      batch_y.extend(y)
-    yield batch_x, batch_y
+    n_batches = len(words) // BATCH_SIZE
+    words = words[:n_batches * BATCH_SIZE]
+    for idx in range(0, len(words), BATCH_SIZE):
+        batch_x, batch_y = [], []
+        batch = words[idx:idx + BATCH_SIZE]
+        for i in range(len(batch)):
+            x = batch[i]
+            y = get_target(batch, i, WINDOW_SIZE)
+            batch_x.extend([x] * len(y))
+            batch_y.extend(y)
+        yield batch_x, batch_y
 
 
 # 定义模型
@@ -90,10 +90,10 @@ class SkipGramNeg(nn.Module):
         self.n_vocab = n_vocab
         self.n_embed = n_embed
         self.noise_dist = noise_dist
-        #定义词向量层
+        # 定义词向量层
         self.in_embed = nn.Embedding(n_vocab, n_embed)
         self.out_embed = nn.Embedding(n_vocab, n_embed)
-        #词向量层参数初始化
+        # 词向量层参数初始化
         self.in_embed.weight.data.uniform_(-1, 1)
         self.out_embed.weight.data.uniform_(-1, 1)
 
@@ -117,6 +117,7 @@ class SkipGramNeg(nn.Module):
         noise_vectors = self.out_embed(noise_words).view(size, N_SAMPLES, self.n_embed)
         return noise_vectors
 
+
 # 定义损失函数
 class NegativeSamplingLoss(nn.Module):
     def __init__(self):
@@ -137,12 +138,13 @@ class NegativeSamplingLoss(nn.Module):
         # 综合计算两类损失
         return -(out_loss + noise_loss).mean()
 
-#模型、损失函数及优化器初始化
+
+# 模型、损失函数及优化器初始化
 model = SkipGramNeg(len(vocab2int), EMBEDDING_DIM, noise_dist=noise_dist)
 criterion = NegativeSamplingLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.003)
 
-#训练
+# 训练
 steps = 0
 for e in range(EPOCHS):
     # 获取输入词以及目标词
@@ -157,8 +159,8 @@ for e in range(EPOCHS):
         # 计算损失
         loss = criterion(input_vectors, output_vectors, noise_vectors)
         # 打印损失
-        if steps%PRINT_EVERY == 0:
-            print("loss：",loss)
+        if steps % PRINT_EVERY == 0:
+            print("loss：", loss)
         # 梯度回传
         optimizer.zero_grad()
         loss.backward()
@@ -167,7 +169,7 @@ for e in range(EPOCHS):
 # 可视化词向量
 for i, w in int2vocab.items():
     vectors = model.state_dict()["in_embed.weight"]
-    x,y = float(vectors[i][0]),float(vectors[i][1])
-    plt.scatter(x,y)
+    x, y = float(vectors[i][0]), float(vectors[i][1])
+    plt.scatter(x, y)
     plt.annotate(w, xy=(x, y), xytext=(5, 2), textcoords='offset points', ha='right', va='bottom')
 plt.show()

@@ -58,7 +58,8 @@ word_freqs = np.array(list(word_freqs.values()))
 unigram_dist = word_freqs / word_freqs.sum()
 noise_dist = torch.from_numpy(unigram_dist ** (0.75) / np.sum(unigram_dist ** (0.75)))
 
-#获取目标词汇
+
+# 获取目标词汇
 def get_target(words, idx, WINDOW_SIZE):
   target_window = np.random.randint(1, WINDOW_SIZE+1)
   start_point = idx-target_window if (idx-target_window)>0 else 0
@@ -66,7 +67,8 @@ def get_target(words, idx, WINDOW_SIZE):
   targets = set(words[start_point:idx]+words[idx+1:end_point+1])
   return list(targets)
 
-#批次化数据
+
+# 批次化数据
 def get_batch(words, BATCH_SIZE, WINDOW_SIZE):
   n_batches = len(words)//BATCH_SIZE
   words = words[:n_batches*BATCH_SIZE]
@@ -80,7 +82,8 @@ def get_batch(words, BATCH_SIZE, WINDOW_SIZE):
       batch_y.extend(y)
     yield batch_x, batch_y
 
-#定义模型
+
+# 定义模型
 class SkipGramNeg(nn.Module):
     def __init__(self, n_vocab, n_embed, noise_dist):
         super().__init__()

@@ -89,6 +89,8 @@ for word in words:
 # 计算单词频次
 total_count = len(data)
 word_freqs = {w: c / total_count for w, c in counts_dict.items()}
+# print(word_freqs)
+
 # 以一定概率去除出现频次高的词汇
 if DELETE_WORDS:
     t = 1e-5

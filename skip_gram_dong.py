@@ -143,9 +143,8 @@ class NegativeSamplingLoss(nn.Module):
 
 
 # 模型、损失函数及优化器初始化
-model = SkipGramNeg(len(vocab2int), EMBEDDING_DIM, noise_dist=noise_dist)
 device = torch.device("cuda:0")
-
+model = SkipGramNeg(len(vocab2int), EMBEDDING_DIM, noise_dist=noise_dist).to(device)
 
 criterion = NegativeSamplingLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.003)
@@ -156,7 +155,11 @@ for e in range(EPOCHS):
     # 获取输入词以及目标词
     for input_words, target_words in get_batch(train_words, BATCH_SIZE, WINDOW_SIZE):
         steps += 1
-        inputs, targets = torch.LongTensor(input_words), torch.LongTensor(target_words)
+
+        device = torch.device("cuda:0")
+
+        inputs, targets = torch.LongTensor(input_words).to(device), torch.LongTensor(target_words).to(device)
+
         # 输入、输出以及负样本向量
         input_vectors = model.forward_input(inputs)
         output_vectors = model.forward_output(targets)

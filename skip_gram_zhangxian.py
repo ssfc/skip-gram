@@ -183,9 +183,8 @@ dataset = WordEmbeddingDataset(data, word_freqs)
 dataloader = tud.DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 
 # 定义一个模型
-model = EmbeddingModel(VOCABULARY_SIZE, EMBEDDING_DIM)
 device = torch.device("cuda:0")
-model.to(device)
+model = EmbeddingModel(VOCABULARY_SIZE, EMBEDDING_DIM).to(device)
 
 # 定义优化器
 optimizer = torch.optim.SGD(model.parameters(), lr=0.001)

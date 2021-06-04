@@ -1,3 +1,6 @@
+# https://zhuanlan.zhihu.com/p/82683575
+# https://github.com/kaimenluo/ailearning/blob/master/skip_gram/skipgramnegative.py
+
 import numpy as np
 import torch
 from torch import nn, optim
@@ -141,6 +144,9 @@ class NegativeSamplingLoss(nn.Module):
 
 # 模型、损失函数及优化器初始化
 model = SkipGramNeg(len(vocab2int), EMBEDDING_DIM, noise_dist=noise_dist)
+device = torch.device("cuda:0")
+
+
 criterion = NegativeSamplingLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.003)
 

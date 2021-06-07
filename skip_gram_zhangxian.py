@@ -14,15 +14,15 @@ import torch.nn.functional as F
 import torch.utils.data as tud
 
 # 参数设置
-EMBEDDING_DIM = 100  # 词向量维度
+EMBEDDING_DIM = 64  # 词向量维度
 PRINT_EVERY = 100  # 可视化频率
-EPOCHS = 100  # 训练的轮数
+EPOCHS = 50  # 训练的轮数
 BATCH_SIZE = 200  # 每一批训练数据大小
 N_SAMPLES = 3  # 负样本大小
 WINDOW_SIZE = 3  # 周边词窗口大小
 FREQ = 5  # 词汇出现频数的阈值
 DELETE_WORDS = False  # 是否删除部分高频词
-VOCABULARY_SIZE = 30000
+VOCABULARY_SIZE = 10000
 
 
 def maybe_download(file_name, expected_bytes, url):

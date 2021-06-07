@@ -183,7 +183,7 @@ dataset = WordEmbeddingDataset(data, word_freqs)
 dataloader = tud.DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 
 # 定义一个模型
-device = torch.device("cuda:0")
+device = torch.device("cuda")
 model = EmbeddingModel(VOCABULARY_SIZE, EMBEDDING_DIM).to(device)
 
 # 定义优化器
@@ -192,7 +192,7 @@ optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 for epoch in range(EPOCHS):
     for i, (input_labels, pos_labels, neg_labels) in enumerate(dataloader):
 
-        device = torch.device("cuda:0")
+        device = torch.device("cuda")
 
         input_labels = input_labels.long().to(device)  # 全部转为LongTensor
         pos_labels = pos_labels.long().to(device)

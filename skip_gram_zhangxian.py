@@ -120,6 +120,9 @@ def read_data(file_name):
 # -------------------------------------- Part 1, prepare dataset --------------------------------------------
 filename = maybe_download('text8.zip', 31344016, 'http://mattmahoney.net/dc/')
 words = read_data(filename)
+temp = words
+words = temp[ :len(words)//20]
+
 print('Data size', len(words))
 # print(words)  # it is a list containing all words in sequence;
 

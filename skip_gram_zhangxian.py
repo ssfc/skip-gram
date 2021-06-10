@@ -190,6 +190,7 @@ model = EmbeddingModel(VOCABULARY_SIZE, EMBEDDING_DIM).to(device)
 # 定义优化器
 optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 
+# ----------------------------------- Part 4, training cycle --------------------------------------------
 for epoch in range(EPOCHS):
     for i, (input_labels, pos_labels, neg_labels) in enumerate(dataloader):
 

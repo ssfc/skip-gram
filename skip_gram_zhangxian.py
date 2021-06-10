@@ -117,7 +117,7 @@ def read_data(file_name):
         result = list(map(lambda x: str(x, encoding="utf8"), word_data))
     return result
 
-
+# -------------------------------------- Part 1, prepare dataset --------------------------------------------
 filename = maybe_download('text8.zip', 31344016, 'http://mattmahoney.net/dc/')
 words = read_data(filename)
 print('Data size', len(words))

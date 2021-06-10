@@ -186,6 +186,7 @@ dataloader = tud.DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 device = torch.device("cuda")
 model = EmbeddingModel(VOCABULARY_SIZE, EMBEDDING_DIM).to(device)
 
+# ----------------------------------- Part 3, construct loss and optimizer --------------------------------------------
 # 定义优化器
 optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 

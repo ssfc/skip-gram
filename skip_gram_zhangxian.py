@@ -178,9 +178,9 @@ word_freqs = word_freqs / np.sum(word_freqs)
 
 # print(word_freqs)
 
-# 构造  dataset 和 dataloader
+# 构造  dataset 和 data loader
 dataset = WordEmbeddingDataset(data, word_freqs)
-dataloader = tud.DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
+data_loader = tud.DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 
 # 定义一个模型
 device = torch.device("cuda")
@@ -192,7 +192,7 @@ optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 
 # ----------------------------------- Part 4, training cycle --------------------------------------------
 for epoch in range(EPOCHS):
-    for i, (input_labels, pos_labels, neg_labels) in enumerate(dataloader):
+    for i, (input_labels, pos_labels, neg_labels) in enumerate(data_loader):
 
         device = torch.device("cuda")
 

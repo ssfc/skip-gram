@@ -180,6 +180,8 @@ word_freqs = word_freqs / np.sum(word_freqs)
 
 # 构造  dataset 和 data loader
 dataset = WordEmbeddingDataset(data, word_freqs)
+print("size of dataset: ", dataset.__len__())
+
 data_loader = tud.DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 
 # 定义一个模型

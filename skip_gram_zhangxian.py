@@ -15,9 +15,9 @@ import torch.nn.functional as F
 import torch.utils.data as tud
 
 # 参数设置
-EMBEDDING_DIM = 20  # 词向量维度
+EMBEDDING_DIM = 50  # 词向量维度
 PRINT_EVERY = 100  # 可视化频率
-EPOCHS = 50  # 训练的轮数
+EPOCHS = 100  # 训练的轮数
 BATCH_SIZE = 200  # 每一批训练数据大小
 N_SAMPLES = 3  # 负样本大小
 WINDOW_SIZE = 3  # 周边词窗口大小
@@ -127,11 +127,6 @@ def tokenize_sentence(sentences):  # split each sentence into list, made up with
 
 # -------------------------------------- Part 1, prepare dataset --------------------------------------------
 start_time = time.time()
-filename = maybe_download('text8.zip', 31344016, 'http://mattmahoney.net/dc/')
-words = read_data(filename)
-temp = words
-words = temp[:len(words) // 20]
-
 with open("corpus.txt", "r", encoding='UTF-8') as f:
     data = f.readlines()
 
@@ -218,7 +213,7 @@ model = EmbeddingModel(VOCABULARY_SIZE, EMBEDDING_DIM).to(device)
 
 # ----------------------------------- Part 3, construct loss and optimizer --------------------------------------------
 # 定义优化器
-optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
+optimizer = torch.optim.SGD(model.parameters(), lr=0.4)
 
 # ----------------------------------- Part 4, training cycle --------------------------------------------
 for epoch in range(EPOCHS):

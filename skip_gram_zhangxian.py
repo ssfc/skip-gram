@@ -143,10 +143,6 @@ print("size of idx_to_word: ", len(idx_to_word))
 
 word_to_idx = {word: i for i, word in enumerate(idx_to_word)}
 
-# 建立词和索引的对应
-# idx_to_word = [word for word in counts_dict.keys()]
-# word_to_idx = {word:i for i,word in enumerate(idx_to_word)}
-
 # 把单词列表words转换为编号的列表
 data = list()
 for word in combined_tokenized_sentence:

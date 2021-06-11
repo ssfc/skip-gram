@@ -17,13 +17,13 @@ import torch.utils.data as tud
 # 参数设置
 EMBEDDING_DIM = 64  # 词向量维度
 PRINT_EVERY = 100  # 可视化频率
-EPOCHS = 20  # 训练的轮数
+EPOCHS = 5  # 训练的轮数
 BATCH_SIZE = 200  # 每一批训练数据大小
 N_SAMPLES = 3  # 负样本大小
 WINDOW_SIZE = 3  # 周边词窗口大小
 FREQ = 5  # 词汇出现频数的阈值
 DELETE_WORDS = False  # 是否删除部分高频词
-VOCABULARY_SIZE = 10000
+VOCABULARY_SIZE = 5000
 
 
 # DataLoader自动帮忙生成batch
@@ -125,6 +125,9 @@ filename = maybe_download('text8.zip', 31344016, 'http://mattmahoney.net/dc/')
 words = read_data(filename)
 temp = words
 words = temp[:len(words) // 20]
+
+
+
 
 print('Data size', len(words))
 # print(words)  # it is a list containing all words in sequence;

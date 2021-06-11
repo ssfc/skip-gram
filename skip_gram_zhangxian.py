@@ -15,7 +15,7 @@ import torch.nn.functional as F
 import torch.utils.data as tud
 
 # 参数设置
-EMBEDDING_DIM = 64  # 词向量维度
+EMBEDDING_DIM = 20  # 词向量维度
 PRINT_EVERY = 100  # 可视化频率
 EPOCHS = 50  # 训练的轮数
 BATCH_SIZE = 200  # 每一批训练数据大小

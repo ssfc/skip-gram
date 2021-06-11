@@ -18,8 +18,6 @@ import scipy
 import sklearn
 from sklearn.metrics.pairwise import cosine_similarity
 
-
-
 # 参数设置
 EMBEDDING_DIM = 50  # 词向量维度
 PRINT_EVERY = 100  # 可视化频率
@@ -31,6 +29,7 @@ FREQ = 5  # 词汇出现频数的阈值
 DELETE_WORDS = False  # 是否删除部分高频词
 VOCABULARY_SIZE = 5000
 LEARNING_RATE = 0.05
+
 
 # DataLoader自动帮忙生成batch
 class WordEmbeddingDataset(tud.Dataset):
@@ -162,7 +161,7 @@ print("counts_dict: ", counts_dict)  # get frequency of each word;
 # trimmed_words = [word for word in words if counts_dict[word] > FREQ]
 
 # 计算 UNK 的频数 = 单词总数 - 前 50000 个单词的频数之和
-#counts_dict['UNK'] = len(words) - np.sum(list(counts_dict.values()))
+# counts_dict['UNK'] = len(words) - np.sum(list(counts_dict.values()))
 
 # 建立词和索引的对应
 idx_to_word = []
@@ -247,7 +246,7 @@ for epoch in range(EPOCHS):
 print("--- %s seconds ---" % (time.time() - start_time))
 '''
 
-#寻找语义相似的单词
+# 寻找语义相似的单词
 '''
 def find_nearest(word):
     index = word_to_idx[word]
@@ -271,5 +270,3 @@ print(embedding_first)
 print(embedding_second)
 print(scipy.spatial.distance.cosine(embedding_first, embedding_second))
 '''
-
-

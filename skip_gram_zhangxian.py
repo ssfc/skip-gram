@@ -138,6 +138,14 @@ print("counts_dict: ", counts_dict)  # get frequency of each word;
 idx_to_word = []
 for word in counts_dict.keys():
     idx_to_word.append(word)
+print("first: ", idx_to_word)
+
+
+idx_to_word = []
+for word in combined_tokenized_sentence:
+    if word not in idx_to_word:
+        idx_to_word.append(word)
+print("second: ", idx_to_word)
 
 print("size of idx_to_word: ", len(idx_to_word))
 

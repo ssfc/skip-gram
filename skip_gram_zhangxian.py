@@ -8,6 +8,7 @@ import random
 import zipfile
 import numpy as np
 import urllib
+import time
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -117,11 +118,13 @@ def read_data(file_name):
         result = list(map(lambda x: str(x, encoding="utf8"), word_data))
     return result
 
+
 # -------------------------------------- Part 1, prepare dataset --------------------------------------------
+start_time = time.time()
 filename = maybe_download('text8.zip', 31344016, 'http://mattmahoney.net/dc/')
 words = read_data(filename)
 temp = words
-words = temp[ :len(words)//20]
+words = temp[:len(words) // 20]
 
 print('Data size', len(words))
 # print(words)  # it is a list containing all words in sequence;
@@ -178,7 +181,6 @@ word_freqs = word_counts / np.sum(word_counts)
 word_freqs = word_freqs ** (3. / 4.)
 word_freqs = word_freqs / np.sum(word_freqs)
 
-
 # print(word_freqs)
 
 # 构造  dataset 和 data loader
@@ -216,3 +218,6 @@ for epoch in range(EPOCHS):
     embedding_weights = model.input_embeddings()
     np.save("embedding-{}".format(EMBEDDING_DIM), embedding_weights)
     torch.save(model.state_dict(), "embedding-{}.th".format(EMBEDDING_DIM))
+
+print("--- %s seconds ---" % (time.time() - start_time))
+

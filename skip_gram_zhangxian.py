@@ -13,10 +13,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data as tud
-import pandas as pd
-import scipy
-import sklearn
-from sklearn.metrics.pairwise import cosine_similarity
+#import scipy
+#import sklearn
+#from sklearn.metrics.pairwise import cosine_similarity
 
 # 参数设置
 EMBEDDING_DIM = 50  # 词向量维度
@@ -102,28 +101,6 @@ class EmbeddingModel(nn.Module):
         return self.in_embed.weight.data.cpu().numpy()
 
 
-def maybe_download(file_name, expected_bytes, url):
-    if not os.path.exists(file_name):
-        file_name, _ = urllib.request.urlretrieve(url + file_name, file_name)
-    stat_info = os.stat(file_name)
-    if stat_info.st_size == expected_bytes:
-        print('Found and verified', file_name)
-    else:
-        print(stat_info.st_size)
-        raise Exception('Failed to verify ' + file_name + '. Can you get to it with a browser?')
-    return file_name
-
-
-def read_data(file_name):
-    with zipfile.ZipFile(file_name) as f:
-        # 读取出来的每个单词是 bytes
-        word_data = f.read(f.namelist()[0]).split()
-        # 把 bytes 转换为 str
-        # data= [str(x, encoding = "utf8") for x in data]
-        result = list(map(lambda x: str(x, encoding="utf8"), word_data))
-    return result
-
-
 def tokenize_sentence(sentences):  # split each sentence into list, made up with words;
     tokens = [x.split("*") for x in sentences]
 
@@ -143,30 +120,27 @@ print(sentences)
 tokenized_sentence = tokenize_sentence(sentences)  # split each sentence into list, made up with words;
 print("Tokenized sentence: ", tokenized_sentence)
 
-words = []
+combined_tokenized_sentence = []
 for item in tokenized_sentence:
-    words = words + item
+    combined_tokenized_sentence = combined_tokenized_sentence + item
 
-print(words)
+print(combined_tokenized_sentence)
 
-print('Data size', len(words))
+print('Data size', len(combined_tokenized_sentence))
 # print(words)  # it is a list containing all words in sequence;
 
 # 取出频数前 50000 的单词
 
-counts_dict = dict((collections.Counter(words).most_common(VOCABULARY_SIZE - 1)))
+counts_dict = dict((collections.Counter(combined_tokenized_sentence).most_common(VOCABULARY_SIZE - 1)))
 print("counts_dict: ", counts_dict)  # get frequency of each word;
-
-# 去掉频数小于 FREQ 的单词
-# trimmed_words = [word for word in words if counts_dict[word] > FREQ]
-
-# 计算 UNK 的频数 = 单词总数 - 前 50000 个单词的频数之和
-# counts_dict['UNK'] = len(words) - np.sum(list(counts_dict.values()))
 
 # 建立词和索引的对应
 idx_to_word = []
 for word in counts_dict.keys():
     idx_to_word.append(word)
+
+print("size of idx_to_word: ", len(idx_to_word))
+
 word_to_idx = {word: i for i, word in enumerate(idx_to_word)}
 
 # 建立词和索引的对应
@@ -175,15 +149,12 @@ word_to_idx = {word: i for i, word in enumerate(idx_to_word)}
 
 # 把单词列表words转换为编号的列表
 data = list()
-for word in words:
-    if word in word_to_idx:
-        index = word_to_idx[word]
-    else:
-        index = word_to_idx['UNK']
+for word in combined_tokenized_sentence:
+    index = word_to_idx[word]
     data.append(index)
 
-# 把单词列表转换为编号的列表
-# data = [word_to_idx.get(word,word_to_idx["UNK"]) for word in words]
+print("size of combined_tokenized_sentence: ", len(combined_tokenized_sentence))
+print("size of data: ", len(data))
 
 # 计算单词频次
 total_count = len(data)

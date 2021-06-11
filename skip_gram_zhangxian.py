@@ -13,18 +13,24 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data as tud
+import pandas as pd
+import scipy
+import sklearn
+from sklearn.metrics.pairwise import cosine_similarity
+
+
 
 # 参数设置
 EMBEDDING_DIM = 50  # 词向量维度
 PRINT_EVERY = 100  # 可视化频率
-EPOCHS = 100  # 训练的轮数
+EPOCHS = 3000  # 训练的轮数
 BATCH_SIZE = 200  # 每一批训练数据大小
 N_SAMPLES = 3  # 负样本大小
 WINDOW_SIZE = 3  # 周边词窗口大小
 FREQ = 5  # 词汇出现频数的阈值
 DELETE_WORDS = False  # 是否删除部分高频词
 VOCABULARY_SIZE = 5000
-
+LEARNING_RATE = 0.05
 
 # DataLoader自动帮忙生成batch
 class WordEmbeddingDataset(tud.Dataset):
@@ -213,8 +219,8 @@ model = EmbeddingModel(VOCABULARY_SIZE, EMBEDDING_DIM).to(device)
 
 # ----------------------------------- Part 3, construct loss and optimizer --------------------------------------------
 # 定义优化器
-optimizer = torch.optim.SGD(model.parameters(), lr=0.4)
-
+optimizer = torch.optim.SGD(model.parameters(), lr=LEARNING_RATE)
+'''
 # ----------------------------------- Part 4, training cycle --------------------------------------------
 for epoch in range(EPOCHS):
     for i, (input_labels, pos_labels, neg_labels) in enumerate(data_loader):
@@ -234,7 +240,33 @@ for epoch in range(EPOCHS):
             print("epoch", epoch, "i", i, "loss", loss.item())
 
     embedding_weights = model.input_embeddings()
+#    print(embedding_weights)
     np.save("embedding-{}".format(EMBEDDING_DIM), embedding_weights)
     torch.save(model.state_dict(), "embedding-{}.th".format(EMBEDDING_DIM))
 
 print("--- %s seconds ---" % (time.time() - start_time))
+'''
+
+#寻找语义相似的单词
+'''
+def find_nearest(word):
+    index = word_to_idx[word]
+    embedding = embedding_weights[index]
+    cos_dis = np.array([scipy.spatial.distance.cosine(e, embedding) for e in embedding_weights])
+    return [idx_to_word[i] for i in cos_dis.argsort()[:10]]
+'''
+
+model.load_state_dict(torch.load("embedding-{}.th".format(EMBEDDING_DIM)))
+embedding_weights = model.input_embeddings()
+print(embedding_weights.shape)
+word_first = '23'
+index_first = word_to_idx[word_first]
+embedding_first = embedding_weights[index_first]
+word_second = '24'
+index_second = word_to_idx[word_second]
+print(word_to_idx)
+embedding_second = embedding_weights[index_second]
+
+print(embedding_first)
+print(embedding_second)
+print(scipy.spatial.distance.cosine(embedding_first, embedding_second))

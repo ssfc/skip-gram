@@ -255,7 +255,7 @@ def find_nearest(word):
     cos_dis = np.array([scipy.spatial.distance.cosine(e, embedding) for e in embedding_weights])
     return [idx_to_word[i] for i in cos_dis.argsort()[:10]]
 '''
-
+'''
 model.load_state_dict(torch.load("embedding-{}.th".format(EMBEDDING_DIM)))
 embedding_weights = model.input_embeddings()
 print(embedding_weights.shape)
@@ -270,3 +270,6 @@ embedding_second = embedding_weights[index_second]
 print(embedding_first)
 print(embedding_second)
 print(scipy.spatial.distance.cosine(embedding_first, embedding_second))
+'''
+
+

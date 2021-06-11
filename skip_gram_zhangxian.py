@@ -156,13 +156,13 @@ print('Data size', len(words))
 # 取出频数前 50000 的单词
 
 counts_dict = dict((collections.Counter(words).most_common(VOCABULARY_SIZE - 1)))
-# print(counts_dict)  # get frequency of each word;
+print("counts_dict: ", counts_dict)  # get frequency of each word;
 
 # 去掉频数小于 FREQ 的单词
 # trimmed_words = [word for word in words if counts_dict[word] > FREQ]
 
 # 计算 UNK 的频数 = 单词总数 - 前 50000 个单词的频数之和
-counts_dict['UNK'] = len(words) - np.sum(list(counts_dict.values()))
+#counts_dict['UNK'] = len(words) - np.sum(list(counts_dict.values()))
 
 # 建立词和索引的对应
 idx_to_word = []

@@ -17,7 +17,7 @@ import torch.utils.data as tud
 # 参数设置
 EMBEDDING_DIM = 64  # 词向量维度
 PRINT_EVERY = 100  # 可视化频率
-EPOCHS = 5  # 训练的轮数
+EPOCHS = 20  # 训练的轮数
 BATCH_SIZE = 200  # 每一批训练数据大小
 N_SAMPLES = 3  # 负样本大小
 WINDOW_SIZE = 3  # 周边词窗口大小

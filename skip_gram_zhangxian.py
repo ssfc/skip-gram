@@ -136,12 +136,6 @@ print("counts_dict: ", counts_dict)  # get frequency of each word;
 
 # 建立词和索引的对应
 idx_to_word = []
-for word in counts_dict.keys():
-    idx_to_word.append(word)
-print("first: ", idx_to_word)
-
-
-idx_to_word = []
 for word in combined_tokenized_sentence:
     if word not in idx_to_word:
         idx_to_word.append(word)
@@ -163,7 +157,8 @@ print("size of data: ", len(data))
 # 计算单词频次
 total_count = len(data)
 word_freqs = {w: c / total_count for w, c in counts_dict.items()}
-# print(word_freqs)
+print("counts_dict.items(): ", counts_dict.items())
+print("word frequency: ", word_freqs)
 
 # 以一定概率去除出现频次高的词汇
 if DELETE_WORDS:

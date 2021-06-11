@@ -219,7 +219,7 @@ model = EmbeddingModel(VOCABULARY_SIZE, EMBEDDING_DIM).to(device)
 # ----------------------------------- Part 3, construct loss and optimizer --------------------------------------------
 # 定义优化器
 optimizer = torch.optim.SGD(model.parameters(), lr=LEARNING_RATE)
-'''
+
 # ----------------------------------- Part 4, training cycle --------------------------------------------
 for epoch in range(EPOCHS):
     for i, (input_labels, pos_labels, neg_labels) in enumerate(data_loader):
@@ -244,7 +244,7 @@ for epoch in range(EPOCHS):
     torch.save(model.state_dict(), "embedding-{}.th".format(EMBEDDING_DIM))
 
 print("--- %s seconds ---" % (time.time() - start_time))
-'''
+
 
 # 寻找语义相似的单词
 '''

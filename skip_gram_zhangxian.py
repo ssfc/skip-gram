@@ -220,4 +220,3 @@ for epoch in range(EPOCHS):
     torch.save(model.state_dict(), "embedding-{}.th".format(EMBEDDING_DIM))
 
 print("--- %s seconds ---" % (time.time() - start_time))
-

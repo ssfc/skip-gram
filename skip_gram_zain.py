@@ -13,6 +13,13 @@ import scipy
 import sklearn
 from sklearn.metrics.pairwise import cosine_similarity
 
+
+def tokenize_sentence(sentences):  # split each sentence into list, made up with words;
+    tokens = [x.split("*") for x in sentences]
+
+    return tokens
+
+
 #判断是否有GPU
 USE_CUDA = torch.cuda.is_available()
 
@@ -41,6 +48,26 @@ with open("text8","r") as fin:
 
 #构造词频字典
 text = text.split()
+
+with open("corpus.txt", "r", encoding='UTF-8') as f:
+    data = f.readlines()
+
+sentences = []
+for line in data:
+    sentences.append(line[1: len(line) - 2])
+
+print(sentences)
+tokenized_sentence = tokenize_sentence(sentences)  # split each sentence into list, made up with words;
+print("Tokenized sentence: ", tokenized_sentence)
+
+words = []
+for item in tokenized_sentence:
+    words = words + item
+text = words
+
+
+print(text)
+
 vocab = dict(Counter(text).most_common(MAX_VOCAB_SIZE - 1))
 vocab["<unk>"] = len(text) - np.sum(list(vocab.values()))
 
@@ -128,6 +155,9 @@ class EmbeddingModel(nn.Module):
     def input_embeddings(self):
         ##取出self.in_embed数据参数
         return self.in_embed.weight.data.cpu().numpy()
+
+
+
 
 
 # 定义一个模型并移动到GPU,forward中已经定义了loss，只需要再给出一个opremazer
